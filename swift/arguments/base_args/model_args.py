@@ -78,6 +78,8 @@ class ModelArguments:
     # 'flash_attention_2', 'flash_attention_3', 'flash_attention_4'
     attn_impl: Optional[str] = None
     experts_impl: Optional[str] = None
+    # Enable Twinkle kernel optimization
+    enable_twinkle_kernel: bool = False
     new_special_tokens: List[str] = field(default_factory=list)
 
     num_labels: Optional[int] = None
