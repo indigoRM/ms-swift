@@ -182,6 +182,7 @@ class ModelLoader(BaseModelLoader):
         self.load_model = load_model
         attn_impl = attn_impl or kwargs.get('attn_implementation')
         self.attn_impl = attn_impl
+        self.enable_twinkle_kernel = enable_twinkle_kernel
         self.attn_impl_keys = None
         experts_impl = experts_impl or kwargs.get('experts_implementation')
         if experts_impl is not None and not transformers_5:
@@ -315,6 +316,10 @@ class ModelLoader(BaseModelLoader):
             with context():
                 model = auto_model_cls.from_pretrained(
                     model_dir, config=config, trust_remote_code=self.default_trust_remote_code, **model_kwargs)
+
+            if self.enable_twinkle_kernel:
+              from twinkle.kernel import kernelize
+              model = kernelize(model)
         # fix not save modeling_xxx.py (transformers 4.45)
         # https://github.com/huggingface/transformers/issues/24737
         has_remote_code = hasattr(config, 'auto_map') and auto_model_cls.__name__ in config.auto_map
@@ -541,6 +546,7 @@ def get_model_processor(
     max_memory: Union[str, Dict[str, Any]] = None,
     attn_impl: Optional[str] = None,
     experts_impl: Optional[str] = None,
+    enable_twinkle_kernel: bool = False,
     rope_scaling: Optional[Dict[str, Any]] = None,
     max_model_len: Optional[int] = None,
     auto_model_cls=None,
