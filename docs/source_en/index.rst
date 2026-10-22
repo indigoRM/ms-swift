@@ -73,10 +73,12 @@ Swift DOCUMENTATION
    BestPractices/MLLM-Registration.md
    BestPractices/Embedding.md
    BestPractices/Reranker.md
+   BestPractices/Decision.md
    BestPractices/Rapidly-Training-VL-model.md
    BestPractices/NPU-support.md
    BestPractices/Metax-support.md
    BestPractices/AMD-support.md
+   BestPractices/MUSA-support.md
    BestPractices/More-Best-Practices.md
 
 Indices and tables
